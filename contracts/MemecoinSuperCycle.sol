@@ -6,19 +6,18 @@ import {ERC20Capped} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20C
 import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import {ERC20Pausable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 import {ERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract MemecoinSuperCycle is ERC20, ERC20Capped, ERC20Burnable, ERC20Pausable, ERC20Permit {
-    address payable public owner;
-
+contract MemecoinSuperCycle is ERC20, ERC20Capped, ERC20Burnable, ERC20Pausable, ERC20Permit, Ownable {
     constructor(uint256 cap) 
-    ERC20("MemcoinSuperCycle", "MSC") 
-    ERC20Capped(cap * (10 ** decimals())) 
-    ERC20Permit("MemcoinSuperCycle") {
-        owner = payable(msg.sender);
-        _mint(owner, 50000000 * (10 ** decimals())); // Initial supply
+        ERC20("MemecoinSuperCycle", "MSC") 
+        ERC20Capped(cap * (10 ** decimals())) 
+        ERC20Permit("MemecoinSuperCycle")
+        Ownable(msg.sender) {
+        _mint(msg.sender, 50000000 * (10 ** decimals())); // Initial supply
     }
     
-    function _update(address from, address to, uint256 value) internal virtual override(ERC20, ERC20Capped, ERC20Pausable) whenNotPaused  {
+    function _update(address from, address to, uint256 value) internal virtual override(ERC20, ERC20Capped, ERC20Pausable) {
         super._update(from, to, value);
     }
 
@@ -26,24 +25,15 @@ contract MemecoinSuperCycle is ERC20, ERC20Capped, ERC20Burnable, ERC20Pausable,
         _mint(to, amount); // Will fail if it exceeds the cap
     }
 
-    function setOwner(address payable newOwner) public onlyOwner {
-        owner = newOwner;
-    }
-
     function pause() public onlyOwner {
-        pause();
+        _pause();
     }
 
-     function unpause() public onlyOwner {
-        unpause();
+    function unpause() public onlyOwner {
+        _unpause();
     }
 
-     function destroy() public onlyOwner {
-        payable(owner).transfer(address(this).balance); // Transfer remaining funds to owner.
+    function destroy() public onlyOwner {
+        payable(owner()).transfer(address(this).balance); // Transfer remaining funds to owner
     }
-
-    modifier onlyOwner {
-        require(msg.sender == owner, "Only the owner can call this function");
-        _;
-    }
-}
+} 
