@@ -7,7 +7,7 @@ import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC2
 import {ERC20Pausable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 import {ERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
-contract MemcoinSuperCycle is ERC20, ERC20Capped, ERC20Burnable, ERC20Pausable, ERC20Permit {
+contract MemecoinSuperCycle is ERC20, ERC20Capped, ERC20Burnable, ERC20Pausable, ERC20Permit {
     address payable public owner;
 
     constructor(uint256 cap) 
