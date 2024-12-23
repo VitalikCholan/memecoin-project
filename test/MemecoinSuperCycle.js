@@ -89,4 +89,46 @@ describe("MemecoinSuperCycle contract", function () {
       });
     });
   });
+
+  describe("Pausable", function () {
+    it("Should pause and unpause the contract", async function () {
+      // Pause the contract
+      await memecoinSuperCycle.pause();
+      expect(await memecoinSuperCycle.paused()).to.equal(true);
+
+      // Pause the contract
+      await expect(
+        memecoinSuperCycle.transfer(addr1.address, 100)
+      ).to.be.revertedWithCustomError(memecoinSuperCycle, "EnforcedPause");
+
+      // Unpause the contract
+      await memecoinSuperCycle.unpause();
+      expect(await memecoinSuperCycle.paused()).to.equal(false);
+
+      // Transfer should work after unpausing
+      await memecoinSuperCycle.transfer(addr1.address, 100);
+      expect(await memecoinSuperCycle.balanceOf(addr1.address)).to.equal(100);
+    });
+
+    it("Should only allow owner to pause/unpause", async function () {
+      // Non-owner tries to pause
+      await expect(memecoinSuperCycle.connect(addr1).pause())
+        .to.be.revertedWithCustomError(
+          memecoinSuperCycle,
+          "OwnableUnauthorizedAccount"
+        )
+        .withArgs(addr1.address);
+
+      // Owner pauses
+      await memecoinSuperCycle.pause();
+
+      // Non-owner tries to unpause
+      await expect(memecoinSuperCycle.connect(addr1).unpause())
+        .to.be.revertedWithCustomError(
+          memecoinSuperCycle,
+          "OwnableUnauthorizedAccount"
+        )
+        .withArgs(addr1.address);
+    });
+  });
 });
