@@ -131,4 +131,120 @@ describe("MemecoinSuperCycle contract", function () {
         .withArgs(addr1.address);
     });
   });
+
+  describe("Permit", function () {
+    it("Should permit and execute transfer", async function () {
+      const amount = 100;
+      const deadline = ethers.MaxUint256;
+      const nonce = await memecoinSuperCycle.nonces(owner.address);
+      const name = await memecoinSuperCycle.name();
+
+      // Get the domain separator
+      const domain = {
+        name: name,
+        version: "1",
+        chainId: (await ethers.provider.getNetwork()).chainId,
+        verifyingContract: memecoinSuperCycle.target,
+      };
+
+      // Create the permit type data
+      const types = {
+        Permit: [
+          { name: "owner", type: "address" },
+          { name: "spender", type: "address" },
+          { name: "value", type: "uint256" },
+          { name: "nonce", type: "uint256" },
+          { name: "deadline", type: "uint256" },
+        ],
+      };
+
+      // Create the permit data
+      const values = {
+        owner: owner.address,
+        spender: addr1.address,
+        value: amount,
+        nonce: nonce,
+        deadline: deadline,
+      };
+
+      // Sign the permit
+      const signature = await owner.signTypedData(domain, types, values);
+      const sig = ethers.Signature.from(signature);
+
+      // Execute the permit
+      await memecoinSuperCycle.permit(
+        owner.address,
+        addr1.address,
+        amount,
+        deadline,
+        sig.v,
+        sig.r,
+        sig.s
+      );
+
+      // Verify the allowance was set
+      expect(
+        await memecoinSuperCycle.allowance(owner.address, addr1.address)
+      ).to.equal(amount);
+
+      // Test that addr1 can now transfer tokens using the permit
+      await memecoinSuperCycle
+        .connect(addr1)
+        .transferFrom(owner.address, addr1.address, amount);
+
+      expect(await memecoinSuperCycle.balanceOf(addr1.address)).to.equal(
+        amount
+      );
+    });
+
+    it("Should fail with expired deadline", async function () {
+      const amount = 100;
+      const deadline = 0; // Expired deadline
+      const nonce = await memecoinSuperCycle.nonces(owner.address);
+      const name = await memecoinSuperCycle.name();
+
+      const domain = {
+        name: name,
+        version: "1",
+        chainId: (await ethers.provider.getNetwork()).chainId,
+        verifyingContract: memecoinSuperCycle.target,
+      };
+
+      const types = {
+        Permit: [
+          { name: "owner", type: "address" },
+          { name: "spender", type: "address" },
+          { name: "value", type: "uint256" },
+          { name: "nonce", type: "uint256" },
+          { name: "deadline", type: "uint256" },
+        ],
+      };
+
+      const values = {
+        owner: owner.address,
+        spender: addr1.address,
+        value: amount,
+        nonce: nonce,
+        deadline: deadline,
+      };
+
+      const signature = await owner.signTypedData(domain, types, values);
+      const sig = ethers.Signature.from(signature);
+
+      await expect(
+        memecoinSuperCycle.permit(
+          owner.address,
+          addr1.address,
+          amount,
+          deadline,
+          sig.v,
+          sig.r,
+          sig.s
+        )
+      ).to.be.revertedWithCustomError(
+        memecoinSuperCycle,
+        "ERC2612ExpiredSignature"
+      );
+    });
+  });
 });
