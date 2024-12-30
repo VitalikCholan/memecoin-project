@@ -2,7 +2,7 @@
 
 :host {
   display: block;
-  background-color: orange; /* or any color you want */
+  background: orange;
   min-height: 100vh;
 }
 
@@ -62,7 +62,7 @@
   justify-self: center;
   /* Add consistent sizing */
   display: flex;
-  align-items: center;
+  align-items: start;
 }
 
 .container-grid-etherscan {
@@ -70,7 +70,7 @@
   justify-self: center;
   /* Add consistent sizing */
   display: flex;
-  align-items: center;
+  align-items: start;
 }
 
 .uniswap-logo,
@@ -80,4 +80,5 @@
   height: auto;
   /* Maintain aspect ratio */
   aspect-ratio: 1;
+  mix-blend-mode: darken;
 }
