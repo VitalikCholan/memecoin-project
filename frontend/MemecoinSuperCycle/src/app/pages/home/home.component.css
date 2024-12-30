@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:host {
+  display: block;
+  background-color: orange; /* or any color you want */
+  min-height: 100vh;
 }
 
 .title {
@@ -17,7 +17,6 @@ body {
 .container-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
-  /* Remove auto-fit from rows as it can cause unexpected sizing */
   grid-template-rows: auto auto;
   grid-template-areas:
     "face face description description"
@@ -28,9 +27,7 @@ body {
 
 .container-grid-description {
   grid-area: description;
-  /* Add specific height control */
   height: 100%;
-  /* Add flex to control text alignment */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,19 +38,15 @@ body {
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.1em;
   font-weight: 500;
-  /* Reduce line height slightly */
   line-height: 1.4em;
   text-align: center;
   text-wrap: balance;
-  /* Add max-width to control text width */
   max-width: 90%;
-  /* Add padding control */
   padding: 1rem;
   /* Prevent text from expanding container */
   overflow-y: auto;
 }
 
-/* Keep other styles the same */
 .container-grid-face {
   grid-area: face;
 }
@@ -61,7 +54,7 @@ body {
 .face-logo {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure image covers area properly */
+  object-fit: cover;
 }
 
 .container-grid-uniswap {
