@@ -11,19 +11,80 @@ body {
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.3em;
   font-weight: 800;
+  text-align: center;
+}
+
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  /* Remove auto-fit from rows as it can cause unexpected sizing */
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "face face description description"
+    "face face uniswap etherscan";
+  gap: 1em;
+  margin: 0 1em;
+}
+
+.container-grid-description {
+  grid-area: description;
+  /* Add specific height control */
+  height: 100%;
+  /* Add flex to control text alignment */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .description {
   font-size: 1.2rem;
-  text-wrap: balance;
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.1em;
   font-weight: 500;
-  line-height: 1.5em;
-  margin: 0 1em 1em 1em;
+  /* Reduce line height slightly */
+  line-height: 1.4em;
+  text-align: center;
+  text-wrap: balance;
+  /* Add max-width to control text width */
+  max-width: 90%;
+  /* Add padding control */
+  padding: 1rem;
+  /* Prevent text from expanding container */
+  overflow-y: auto;
 }
 
-.title,
-.description {
-  text-align: center;
+/* Keep other styles the same */
+.container-grid-face {
+  grid-area: face;
+}
+
+.face-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure image covers area properly */
+}
+
+.container-grid-uniswap {
+  grid-area: uniswap;
+  justify-self: center;
+  /* Add consistent sizing */
+  display: flex;
+  align-items: center;
+}
+
+.container-grid-etherscan {
+  grid-area: etherscan;
+  justify-self: center;
+  /* Add consistent sizing */
+  display: flex;
+  align-items: center;
+}
+
+.uniswap-logo,
+.etherscan-logo {
+  max-width: 100%;
+  /* Add consistent height */
+  height: auto;
+  /* Maintain aspect ratio */
+  aspect-ratio: 1;
 }
