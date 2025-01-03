@@ -4,6 +4,7 @@
   display: block;
   background: orange;
   min-height: 100vh;
+  cursor: url("/assets/rocket-medium.png"), auto;
 }
 
 .title {
@@ -88,6 +89,5 @@
 
 .uniswap-logo:hover,
 .etherscan-logo:hover {
-  cursor: pointer;
   transform: scale(1.05);
 }
