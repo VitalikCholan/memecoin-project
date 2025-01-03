@@ -82,4 +82,12 @@
   /* Maintain aspect ratio */
   aspect-ratio: 1;
   mix-blend-mode: darken;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+}
+
+.uniswap-logo:hover,
+.etherscan-logo:hover {
+  cursor: pointer;
+  transform: scale(1.05);
 }
