@@ -17,7 +17,7 @@
   margin: 0 1em;
 }
 
-.container-grid-description {
+.item-grid-description {
   grid-area: description;
   height: 100%;
   display: flex;
@@ -39,7 +39,7 @@
   overflow-y: auto;
 }
 
-.container-grid-face {
+.item-grid-face {
   grid-area: face;
 }
 
@@ -50,7 +50,7 @@
   mix-blend-mode: darken;
 }
 
-.container-grid-uniswap {
+.item-grid-uniswap {
   grid-area: uniswap;
   justify-self: center;
   /* Add consistent sizing */
@@ -58,7 +58,7 @@
   align-items: start;
 }
 
-.container-grid-etherscan {
+.item-grid-etherscan {
   grid-area: etherscan;
   justify-self: center;
   /* Add consistent sizing */
