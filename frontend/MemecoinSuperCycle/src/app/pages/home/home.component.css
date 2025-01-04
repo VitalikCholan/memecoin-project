@@ -89,5 +89,6 @@
 
 .uniswap-logo:hover,
 .etherscan-logo:hover {
+  cursor: pointer;
   transform: scale(1.05);
 }
