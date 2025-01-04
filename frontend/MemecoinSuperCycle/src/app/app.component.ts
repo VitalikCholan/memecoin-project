@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { HomeComponent } from './pages/home/home.component';
-import { AboutComponent } from './pages/about/about.component';
-
+import { RouterModule, RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HomeComponent, AboutComponent],
+  imports: [RouterModule, RouterLinkActive],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  title = 'MemecoinSuperCycle';
-}
+export class AppComponent {}
