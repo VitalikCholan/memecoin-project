@@ -1,0 +1,55 @@
+.container-about {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "title pepe"
+    "description-one pepe"
+    "description-two pepe";
+  gap: 1em;
+  margin: 0 1em;
+}
+
+.item-about-title {
+  grid-area: title;
+  font-size: 2.5rem;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.3em;
+  font-weight: 800;
+  text-align: center;
+}
+
+.item-about-description-one {
+  grid-area: description-one;
+}
+
+.item-about-description-two {
+  grid-area: description-two;
+}
+
+.item-about-description-one,
+.item-about-description-two {
+  font-size: 1.2rem;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  line-height: 1.4em;
+  text-align: center;
+  text-wrap: balance;
+  max-width: 90%;
+  padding: 1rem;
+  /* Prevent text from expanding container */
+  overflow-y: auto;
+}
+
+.item-about-pepe {
+  grid-area: pepe;
+}
+
+.pepe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: darken;
+  clip-path: circle(50% at 50% 50%);
+}
