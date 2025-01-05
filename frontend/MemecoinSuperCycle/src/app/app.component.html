@@ -1,22 +1,27 @@
-<nav class="container">
-  <ul class="links">
-    <li>
-      <a
-        routerLink="/home"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >Home</a
-      >
-    </li>
-    <li>
-      <a
-        routerLink="/about"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >About</a
-      >
-    </li>
-  </ul>
-</nav>
-
-<router-outlet></router-outlet>
+<header>
+  <nav>
+    <div class="container">
+      <ul class="links">
+        <li>
+          <a
+            routerLink="/home"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/about"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >About</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<main>
+  <router-outlet></router-outlet>
+</main>
