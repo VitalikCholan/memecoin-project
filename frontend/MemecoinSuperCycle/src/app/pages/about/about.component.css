@@ -51,4 +51,5 @@
   height: 100%;
   object-fit: cover;
   mix-blend-mode: darken;
+  clip-path: circle(50% at 50% 50%);
 }
