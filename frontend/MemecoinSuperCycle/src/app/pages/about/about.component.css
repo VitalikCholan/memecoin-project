@@ -17,6 +17,7 @@
   letter-spacing: 0.3em;
   font-weight: 800;
   text-align: center;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
 .item-about-description-one {
