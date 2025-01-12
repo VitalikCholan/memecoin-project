@@ -9,7 +9,7 @@ describe("MemecoinSuperCycle contract", function () {
   let owner;
   let addr1;
   let addr2;
-  let tokenCap = 100000000;
+  let tokenCap = 50000000;
 
   this.beforeEach(async function () {
     token = await ethers.getContractFactory("MemecoinSuperCycle");
