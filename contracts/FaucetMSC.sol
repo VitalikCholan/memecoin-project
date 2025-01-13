@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28; 
 
-import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";      
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {MemecoinSuperCycle} from "./MemecoinSuperCycle.sol";   
 
@@ -60,11 +60,13 @@ contract FaucetMSC is ReentrancyGuard, Ownable {
 
     function setLockTime(uint256 _time) public onlyOwner {
         require(_time > 0, "Time must be greater than 0");
-        lockTime = _time * 1 minutes;
+        lockTime = _time;
         emit SettingsUpdated(amountPerRequest, lockTime);
     }
 
     function withdrawTokens(uint256 _amount) external onlyOwner {
+        require(_amount > 0, "Amount must be greater than 0");
+        require(_amount <= token.balanceOf(address(this)), "Insufficient balance");
         require(token.transfer(owner(), _amount), "Transfer failed");
     }
 }
