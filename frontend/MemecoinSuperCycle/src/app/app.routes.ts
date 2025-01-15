@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { TokenomicsComponent } from './pages/tokenomics/tokenomics.component';
 import { HowToBuyComponent } from './pages/how-to-buy/how-to-buy.component';
+import { FaucetPageComponent } from './pages/faucet-page/faucet-page.component';
 
 export const routes: Routes = [
   {
@@ -25,5 +26,9 @@ export const routes: Routes = [
   {
     path: 'how-to-buy',
     component: HowToBuyComponent,
+  },
+  {
+    path: 'faucet',
+    component: FaucetPageComponent,
   },
 ];

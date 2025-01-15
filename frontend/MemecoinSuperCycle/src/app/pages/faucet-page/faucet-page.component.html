@@ -1,0 +1,20 @@
+<header class="wallet-header">
+  <button
+    class="wallet-button"
+    [class.connected]="account"
+    (click)="account ? disconnectWallet() : connectWallet()"
+    [disabled]="isConnecting"
+  >
+    @if (!account) {
+    <p>Connect Wallet</p>
+    } @else {
+    <p>{{ account.slice(0, 6) }}...{{ account.slice(-4) }}</p>
+    }
+  </button>
+</header>
+
+<main class="faucet-content">
+  <h1>MSC Token Faucet</h1>
+  <p *ngIf="!account">Connect your wallet to use the faucet</p>
+  <!-- Faucet content will go here -->
+</main>
