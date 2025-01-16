@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Web3Service } from './web3service.service';
+import { ContractService } from './contract.service';
 
-describe('Web3Service', () => {
-  let service: Web3Service;
+describe('ContractService', () => {
+  let service: ContractService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Web3Service);
+    service = TestBed.inject(ContractService);
   });
 
   it('should be created', () => {
