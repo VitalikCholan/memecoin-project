@@ -13,7 +13,7 @@ import { ContractService } from '../../service/contract.service';
 export class FaucetPageComponent implements OnInit {
   public account: string = '';
   public isConnecting: boolean = false;
-
+  public message: string = '';
   constructor(
     private web3Service: Web3Service,
     private contractService: ContractService
@@ -44,12 +44,15 @@ export class FaucetPageComponent implements OnInit {
 
   async requestTokens() {
     try {
-      await this.contractService.requestTokens();
-      console.log('Tokens requested successfully');
-      alert('Tokens requested successfully');
+      const result = await this.contractService.requestTokens();
+      if (result.success) {
+        this.message = result.message;
+      } else {
+        this.message = result.message;
+      }
     } catch (error) {
-      console.error('Error requesting tokens:', error);
-      alert('Error requesting tokens');
+      console.error('Error:', error);
+      this.message = 'Failed to request tokens';
     }
   }
 }
