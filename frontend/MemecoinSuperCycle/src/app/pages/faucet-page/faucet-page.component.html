@@ -24,6 +24,12 @@
       [value]="account"
       required
     />
-    <button (click)="requestTokens()">Request Tokens</button>
+    <button
+      (click)="requestTokens()"
+      [disabled]="isConnecting"
+      class="request-button"
+    >
+      Request Tokens
+    </button>
   </section>
 </main>

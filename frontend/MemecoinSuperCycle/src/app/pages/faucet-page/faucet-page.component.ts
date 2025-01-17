@@ -44,12 +44,18 @@ export class FaucetPageComponent implements OnInit {
 
   async requestTokens() {
     try {
-      const result = await this.contractService.requestTokens();
-      if (result.success) {
-        this.message = result.message;
-      } else {
-        this.message = result.message;
+      // If wallet is not connected, connect it first
+      if (!this.account) {
+        await this.connectWallet();
+        if (!this.account) {
+          this.message = 'Please connect your wallet to request tokens';
+          return;
+        }
       }
+
+      // Now proceed with token request
+      const result = await this.contractService.requestTokens();
+      this.message = result.message;
     } catch (error) {
       console.error('Error:', error);
       this.message = 'Failed to request tokens';
