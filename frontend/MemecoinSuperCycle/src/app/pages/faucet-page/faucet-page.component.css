@@ -10,10 +10,13 @@
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  border: 1px solid #ccc;
   background: #f9a707;
+  border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 0.8em;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.3em;
 }
 
 .wallet-button:hover {
@@ -31,6 +34,54 @@
 }
 
 .faucet-content {
-  padding: 2rem;
+  padding: 4rem;
   text-align: center;
+  margin: 0 8rem;
+  background-color: #f9a707;
+  border-radius: 20px;
+}
+
+.faucet-title {
+  font-size: 2.5rem;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.3em;
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.faucet-message {
+  font-size: 1.2rem;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+
+.faucet-input {
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  width: 50%;
+  font-size: 1.2rem;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+
+.faucet-input:focus {
+  outline: none;
+}
+
+.request-button {
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  width: 50%;
+  font-size: 1.2rem;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.3em;
+  text-align: center;
+  cursor: pointer;
 }

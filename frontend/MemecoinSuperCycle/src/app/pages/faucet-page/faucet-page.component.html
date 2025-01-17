@@ -14,11 +14,14 @@
 </header>
 
 <main class="faucet-content">
-  <h1>MSC Token Faucet</h1>
-  <p *ngIf="!account">Connect your wallet to use the faucet</p>
+  <h1 class="faucet-title">MSC Token Faucet</h1>
   <section>
-    <p>{{ message }}</p>
+    <p *ngIf="!account" class="faucet-message">
+      Connect your wallet to use the faucet
+    </p>
+    <p class="faucet-message">{{ message }}</p>
     <input
+      class="faucet-input"
       type="text"
       placeholder="Enter your address"
       [value]="account"
