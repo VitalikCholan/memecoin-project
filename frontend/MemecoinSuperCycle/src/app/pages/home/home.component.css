@@ -37,7 +37,6 @@
   text-wrap: balance;
   max-width: 90%;
   padding: 1rem;
-  /* Prevent text from expanding container */
   overflow-y: auto;
 }
 
@@ -56,7 +55,6 @@
 .item-grid-uniswap {
   grid-area: uniswap;
   justify-self: center;
-  /* Add consistent sizing */
   display: flex;
   align-items: start;
 }
@@ -64,7 +62,6 @@
 .item-grid-etherscan {
   grid-area: etherscan;
   justify-self: center;
-  /* Add consistent sizing */
   display: flex;
   align-items: start;
 }
@@ -72,9 +69,7 @@
 .uniswap-logo,
 .etherscan-logo {
   max-width: 100%;
-  /* Add consistent height */
   height: auto;
-  /* Maintain aspect ratio */
   aspect-ratio: 1;
   mix-blend-mode: darken;
   transform: scale(1);

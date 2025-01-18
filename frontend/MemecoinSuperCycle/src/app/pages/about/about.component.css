@@ -39,7 +39,6 @@
   text-wrap: balance;
   max-width: 90%;
   padding: 1rem;
-  /* Prevent text from expanding container */
   overflow-y: auto;
 }
 
@@ -53,4 +52,22 @@
   object-fit: cover;
   mix-blend-mode: darken;
   clip-path: circle(50% at 50% 50%);
+}
+
+@media (max-width: 1300px) {
+  .container-about {
+    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "title"
+      "pepe"
+      "description-one"
+      "description-two";
+  }
+
+  .pepe {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+  }
 }
