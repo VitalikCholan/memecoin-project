@@ -1,10 +1,11 @@
 .title {
-  font-size: 4rem;
+  font-size: clamp(1.5rem, 0.5854rem + 3.9024vw, 4rem);
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.3em;
   font-weight: 800;
   text-align: center;
   text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+  margin: 1em;
 }
 
 .container-grid {
@@ -27,7 +28,7 @@
 }
 
 .description {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 0.9268rem + 0.3122vw, 1.2rem);
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.1em;
   font-weight: 500;
@@ -84,4 +85,26 @@
 .etherscan-logo:hover {
   cursor: pointer;
   transform: scale(1.05);
+}
+
+@media (max-width: 1070px) {
+  .container-grid {
+    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "face face"
+      "description description"
+      "uniswap etherscan";
+  }
+
+  .face-logo {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .uniswap-logo,
+  .etherscan-logo {
+    margin-bottom: 1em;
+  }
 }
