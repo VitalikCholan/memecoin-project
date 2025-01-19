@@ -4,7 +4,7 @@
 }
 
 .title {
-  font-size: 4rem;
+  font-size: clamp(2rem, 1.2683rem + 3.122vw, 4rem);
   text-align: center;
   font-weight: bold;
   margin-bottom: 3rem;
@@ -18,13 +18,13 @@
 }
 
 .supply-label {
-  font-size: 2.5rem;
+  font-size: clamp(1.5rem, 1.1341rem + 1.561vw, 2.5rem);
   margin-bottom: 1rem;
   font-weight: bold;
 }
 
 .supply-value {
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 1.561rem + 1.561vw, 3.5rem);
   font-weight: bold;
   background: rgba(0, 0, 0, 0.2);
   padding: 1rem 2rem;
@@ -43,7 +43,7 @@
 }
 
 .info-title {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 1.3171rem + 0.7805vw, 2rem);
   font-weight: bold;
   text-align: center;
 }
@@ -74,10 +74,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .title {
-    font-size: 3rem;
-  }
-
   .supply-value {
     font-size: 2rem;
   }

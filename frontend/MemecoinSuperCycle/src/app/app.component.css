@@ -45,6 +45,14 @@ nav {
 }
 
 /* Responsive design */
+@media (max-width: 1150px) {
+  .links {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 @media (max-width: 768px) {
   nav {
     padding: 1rem;

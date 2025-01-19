@@ -1,5 +1,5 @@
 .title {
-  font-size: 3rem;
+  font-size: clamp(2rem, 1.2683rem + 3.122vw, 4rem);
   text-align: center;
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
