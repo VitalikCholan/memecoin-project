@@ -42,7 +42,7 @@
 }
 
 .faucet-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.5rem, 1.1341rem + 1.561vw, 2.5rem);
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.3em;
   font-weight: 800;
@@ -63,7 +63,7 @@
   padding: 0.5rem 1rem;
   margin: 1rem;
   width: 50%;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 0.9268rem + 0.3122vw, 1.2rem);
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.3em;
   text-align: center;
@@ -79,9 +79,25 @@
   padding: 0.5rem 1rem;
   margin: 1rem;
   width: 50%;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 0.9268rem + 0.3122vw, 1.2rem);
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.3em;
   text-align: center;
   cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .faucet-content {
+    margin: 0 2rem;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .faucet-input {
+    width: 80%;
+  }
+  .request-button {
+    width: 80%;
+  }
 }
