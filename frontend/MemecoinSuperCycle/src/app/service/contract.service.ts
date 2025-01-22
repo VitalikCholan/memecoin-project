@@ -8,8 +8,10 @@ import FaucetABI from '../abi/FaucetMSC.json';
 })
 export class ContractService {
   private faucetContract: Contract | null = null;
-  private readonly FAUCET_ADDRESS =
-    '0xe5677F16a73e894964Fc2b06fa9f2653C519a1fD';
+  private readonly FAUCET_ADDRESS = {
+    sepolia: '0xe5677F16a73e894964Fc2b06fa9f2653C519a1fD',
+    baseSepolia: '0x8EF8c5CD456E2D3DCaDCa90bEb51159F90AFa089',
+  };
 
   constructor(private web3Service: Web3Service) {
     this.initContract();
@@ -18,9 +20,17 @@ export class ContractService {
   private async initContract() {
     if (typeof window.ethereum !== 'undefined') {
       const provider = new ethers.BrowserProvider(window.ethereum);
+      const network = await provider.getNetwork();
+      const chainId = network.chainId;
+
+      const address =
+        chainId === BigInt(84531)
+          ? this.FAUCET_ADDRESS.baseSepolia
+          : this.FAUCET_ADDRESS.sepolia;
+
       const signer = await provider.getSigner();
       this.faucetContract = new ethers.Contract(
-        this.FAUCET_ADDRESS,
+        address, // Use the selected address string
         FaucetABI.abi,
         signer
       );

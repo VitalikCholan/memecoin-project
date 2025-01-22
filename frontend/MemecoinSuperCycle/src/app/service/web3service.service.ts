@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Eip1193Provider, BrowserProvider, ethers } from 'ethers';
+import { NETWORKS } from '../config/networks';
 
 declare global {
   interface Window {
@@ -54,5 +55,28 @@ export class Web3Service {
 
   isConnected(): boolean {
     return !!this.accountSubject.value;
+  }
+
+  async switchNetwork(networkName: string) {
+    const network = NETWORKS[networkName];
+    if (!network) throw new Error('Network not configured');
+
+    try {
+      // Try to switch to the network
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: network.chainId }],
+      });
+    } catch (error: any) {
+      // If the network isn't added to MetaMask, add it
+      if (error.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [network],
+        });
+      } else {
+        throw error;
+      }
+    }
   }
 }
