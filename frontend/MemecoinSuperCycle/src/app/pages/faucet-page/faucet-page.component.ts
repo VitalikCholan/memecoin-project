@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Web3Service } from '../../service/web3service.service';
 import { ContractService } from '../../service/contract.service';
+import { NetworkButtonComponent } from '../../components/network-button/network-button/network-button.component';
 
 @Component({
   selector: 'app-faucet-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NetworkButtonComponent],
   templateUrl: './faucet-page.component.html',
   styleUrl: './faucet-page.component.css',
 })
@@ -19,7 +20,7 @@ export class FaucetPageComponent implements OnInit {
     private contractService: ContractService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.web3Service.account$.subscribe((account) => (this.account = account));
   }
 

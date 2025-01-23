@@ -1,0 +1,11 @@
+.network-select {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: none;
+  background: #f9a707;
+  color: white;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 0.1em;
+  margin-right: 1rem;
+}
