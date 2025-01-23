@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Eip1193Provider, BrowserProvider, ethers } from 'ethers';
-import { NETWORKS } from '../config/networks';
+import { NETWORKS } from '../config/networks'; // Import the networks configuration
 
 declare global {
   interface Window {
-    ethereum: Eip1193Provider;
+    ethereum: Eip1193Provider & {
+      on(event: string, callback: (params: any) => void): void;
+      removeListener(event: string, callback: (params: any) => void): void;
+    };
   }
 }
 
@@ -16,10 +19,22 @@ export class Web3Service {
   private provider: BrowserProvider;
   private accountSubject = new BehaviorSubject<string>('');
   public account$ = this.accountSubject.asObservable();
+  private networkSubject = new BehaviorSubject<string>('');
+  public network$ = this.networkSubject.asObservable();
 
   constructor() {
     this.provider = new ethers.BrowserProvider(window.ethereum);
     this.checkWalletConnection();
+    this.listenToNetworkChanges();
+  }
+
+  private listenToNetworkChanges() {
+    if (typeof window.ethereum !== 'undefined') {
+      window.ethereum.on('chainChanged', (chainId: string) => {
+        this.networkSubject.next(chainId);
+        this.checkWalletConnection(); // Refresh connection state
+      });
+    }
   }
 
   async checkWalletConnection() {
@@ -58,25 +73,41 @@ export class Web3Service {
   }
 
   async switchNetwork(networkName: string) {
-    const network = NETWORKS[networkName];
-    if (!network) throw new Error('Network not configured');
-
     try {
-      // Try to switch to the network
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: network.chainId }],
-      });
-    } catch (error: any) {
-      // If the network isn't added to MetaMask, add it
-      if (error.code === 4902) {
+      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+
+      const network = NETWORKS[networkName];
+      if (!network) return;
+
+      try {
         await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [network],
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: network.chainId }],
         });
-      } else {
+      } catch (error: any) {
+        if (error.code === 4902) {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: network.chainId,
+                chainName: network.chainName,
+                nativeCurrency: {
+                  name: 'ETH',
+                  symbol: 'ETH',
+                  decimals: 18,
+                },
+                rpcUrls: [network.rpcUrls],
+                blockExplorerUrls: [network.blockExplorerUrls],
+              },
+            ],
+          });
+        }
         throw error;
       }
+    } catch (error) {
+      console.error('Failed to switch network:', error);
+      throw error;
     }
   }
 }

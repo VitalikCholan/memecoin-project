@@ -12,8 +12,8 @@ import { Web3Service } from '../../../service/web3service.service';
 export class NetworkButtonComponent {
   constructor(private web3Service: Web3Service) {}
 
-  async switchNetwork(event: any) {
-    const network = event.target.value;
+  async switchNetwork(event: Event) {
+    const network = (event.target as HTMLSelectElement).value;
     if (!network) return;
 
     try {
