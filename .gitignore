@@ -3,7 +3,8 @@ node_modules
 
 # Hardhat files
 /cache
-/artifacts
+/artifacts/*
+!shared/abis/
 
 # TypeChain files
 /typechain
@@ -15,3 +16,7 @@ node_modules
 
 # Hardhat Ignition default folder for deployments against a local node
 ignition/deployments/chain-31337
+
+# Environments
+/src/environments/*
+!/src/environments/environment.example.ts
