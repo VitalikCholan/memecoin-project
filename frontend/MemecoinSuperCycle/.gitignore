@@ -1,0 +1,3 @@
+# Environments
+/src/environments/*
+!/src/environments/environment.example.ts
