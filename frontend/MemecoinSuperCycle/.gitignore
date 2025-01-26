@@ -43,5 +43,7 @@ Thumbs.db
 .environment
 
 # Environment files
+=======
+# Environments
 /src/environments/*
 !/src/environments/environment.example.ts
