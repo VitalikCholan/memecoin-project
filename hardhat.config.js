@@ -14,5 +14,10 @@ module.exports = {
       url: process.env.INFURA_BASE_SEPOLIA_ENDPOINT,
       accounts: [process.env.PRIVATE_KEY],
     },
+
+    base: {
+      url: process.env.INFURA_BASE_ENDPOINT,
+      accounts: [process.env.PRIVATE_KEY],
+    },
   },
 };
