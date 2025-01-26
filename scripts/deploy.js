@@ -4,7 +4,7 @@ async function main() {
   const MemecoinSuperCycle = await hre.ethers.getContractFactory(
     "MemecoinSuperCycle"
   );
-  const memecoinSuperCycle = await MemecoinSuperCycle.deploy(1000000000);
+  const memecoinSuperCycle = await MemecoinSuperCycle.deploy(50000000);
 
   await memecoinSuperCycle.waitForDeployment();
 
