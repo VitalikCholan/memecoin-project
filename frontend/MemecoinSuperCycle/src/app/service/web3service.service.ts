@@ -3,11 +3,28 @@ import { BehaviorSubject } from 'rxjs';
 import { Eip1193Provider, BrowserProvider, ethers } from 'ethers';
 import { NETWORKS } from '../config/networks'; // Import the networks configuration
 
+type EthereumEventMap = {
+  chainChanged: (chainId: string) => void;
+  accountsChanged: (accounts: string[]) => void;
+  connect: (info: { chainId: string }) => void;
+  disconnect: (error: { code: number; message: string }) => void;
+};
+
 declare global {
   interface Window {
     ethereum: Eip1193Provider & {
-      on(event: string, callback: (params: any) => void): void;
-      removeListener(event: string, callback: (params: any) => void): void;
+      request: (args: {
+        method: string;
+        params?: unknown[];
+      }) => Promise<unknown>;
+      on<K extends keyof EthereumEventMap>(
+        event: K,
+        handler: EthereumEventMap[K]
+      ): void;
+      removeListener<K extends keyof EthereumEventMap>(
+        event: K,
+        handler: EthereumEventMap[K]
+      ): void;
     };
   }
 }
@@ -84,8 +101,8 @@ export class Web3Service {
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: network.chainId }],
         });
-      } catch (error: any) {
-        if (error.code === 4902) {
+      } catch (error: unknown) {
+        if (error instanceof Error && 'code' in error && error.code === 4902) {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [
