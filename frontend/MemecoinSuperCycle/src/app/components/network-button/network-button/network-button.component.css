@@ -1,11 +1,52 @@
 .network-select {
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  padding: 0.5rem 0.5rem;
   border: none;
+  outline: none;
   background: #f9a707;
   color: white;
   cursor: pointer;
   font-family: "Montserrat", sans-serif;
   letter-spacing: 0.1em;
   margin-right: 1rem;
+}
+
+.custom-select {
+  position: relative;
+}
+
+.custom-arrow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  background-color: #f9a707;
+  height: 100%;
+  width: 2em;
+  pointer-events: none;
+}
+
+.custom-arrow::before,
+.custom-arrow::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.custom-arrow::before {
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-bottom: 0.4em solid #fff;
+  top: 35%;
+}
+
+.custom-arrow::after {
+  border-left: 0.4em solid transparent;
+  border-right: 0.4em solid transparent;
+  border-top: 0.4em solid #fff;
+  top: 65%;
 }

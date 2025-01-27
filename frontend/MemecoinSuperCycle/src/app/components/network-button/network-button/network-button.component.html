@@ -1,4 +1,7 @@
-<select (change)="switchNetwork($event)" class="network-select">
-  <option value="sepolia">Sepolia</option>
-  <option value="baseSepolia">Base Sepolia</option>
-</select>
+<div class="custom-select">
+  <select (change)="switchNetwork($event)" class="network-select">
+    <option value="sepolia">Sepolia</option>
+    <option value="baseSepolia">Base Sepolia</option>
+  </select>
+  <span class="custom-arrow"></span>
+</div>
