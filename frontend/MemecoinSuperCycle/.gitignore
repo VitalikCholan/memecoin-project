@@ -40,10 +40,11 @@ testem.log
 Thumbs.db
 
 # Environment
-.environment
+/environment
 
 # Environment files
-=======
-# Environments
-/src/environments/*
-!/src/environments/environment.example.ts
+/src/app/environments/environment.ts
+/src/app/environments/environment.prod.ts
+
+# Config files
+/src/app/config/config.ts
