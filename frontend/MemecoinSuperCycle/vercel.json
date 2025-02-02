@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "buildCommand": "ng build --configuration=production",
+  "installCommand": "npm install ethers && npm install",
+  "framework": "angular",
+  "outputDirectory": "dist/browser",
+  "routes": [
+    { "handle": "filesystem" },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
