@@ -8,13 +8,13 @@ This is a ERC-20 token implementation in Solidity. It includes a token contract 
 
 ## Preview:
 
-<img src="screenshots/1.png" alt="Memecoin Super Cycle" width="700px">
+<img src="screenshots/MSC_1.png" alt="Memecoin Super Cycle" width="700px">
 
-<img src="screenshots/2.png" alt="Memecoin Super Cycle" width="700px">
+<img src="screenshots/MSC_2.png" alt="Memecoin Super Cycle" width="700px">
 
-<img src="screenshots/3.png" alt="Memecoin Super Cycle" width="700px">
+<img src="screenshots/MSC_3.png" alt="Memecoin Super Cycle" width="700px">
 
-<img src="screenshots/4.png" alt="Memecoin Super Cycle" width="700px">
+<img src="screenshots/MSC_4.png" alt="Memecoin Super Cycle" width="700px">
 
 ## Features
 
