@@ -3,6 +3,33 @@ import { BehaviorSubject } from 'rxjs';
 import { Eip1193Provider, BrowserProvider, ethers } from 'ethers';
 import { NETWORKS } from '../config/networks'; // Import the networks configuration
 
+type EthereumRequestParams = {
+  eth_requestAccounts: never;
+  eth_chainId: never;
+  wallet_switchEthereumChain: [{ chainId: string }];
+  wallet_addEthereumChain: [
+    {
+      chainId: string;
+      chainName: string;
+      nativeCurrency: {
+        name: string;
+        symbol: string;
+        decimals: number;
+      };
+      rpcUrls: string[];
+      blockExplorerUrls: string[];
+    }
+  ];
+};
+
+// Define return types
+type EthereumRequestResults = {
+  eth_requestAccounts: string[];
+  eth_chainId: string;
+  wallet_switchEthereumChain: null;
+  wallet_addEthereumChain: null;
+};
+
 type EthereumEventMap = {
   chainChanged: (chainId: string) => void;
   accountsChanged: (accounts: string[]) => void;
@@ -13,10 +40,10 @@ type EthereumEventMap = {
 declare global {
   interface Window {
     ethereum: Eip1193Provider & {
-      request: (args: {
-        method: string;
-        params?: unknown[];
-      }) => Promise<unknown>;
+      request<T extends keyof EthereumRequestParams>(args: {
+        method: T;
+        params?: EthereumRequestParams[T];
+      }): Promise<EthereumRequestResults[T]>;
       on<K extends keyof EthereumEventMap>(
         event: K,
         handler: EthereumEventMap[K]
@@ -27,6 +54,10 @@ declare global {
       ): void;
     };
   }
+}
+
+interface MetaMaskError extends Error {
+  code: number;
 }
 
 @Injectable({
@@ -91,8 +122,6 @@ export class Web3Service {
 
   async switchNetwork(networkName: string) {
     try {
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-
       const network = NETWORKS[networkName];
       if (!network) return;
 
@@ -101,8 +130,8 @@ export class Web3Service {
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: network.chainId }],
         });
-      } catch (error: unknown) {
-        if (error instanceof Error && 'code' in error && error.code === 4902) {
+      } catch (error) {
+        if ((error as MetaMaskError).code === 4902) {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [
@@ -119,11 +148,13 @@ export class Web3Service {
               },
             ],
           });
+        } else {
+          console.error('Failed to switch network:', error);
+          throw new Error(`Network switch failed: ${(error as Error).message}`);
         }
-        throw error;
       }
     } catch (error) {
-      console.error('Failed to switch network:', error);
+      console.error('Network operation failed:', error);
       throw error;
     }
   }
