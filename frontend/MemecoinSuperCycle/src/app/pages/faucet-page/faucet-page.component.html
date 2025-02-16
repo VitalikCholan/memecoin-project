@@ -1,12 +1,20 @@
 <header class="wallet-header">
-  <app-network-button></app-network-button>
+  <app-network-button *ngIf="isMetaMaskInstalled"></app-network-button>
   <button
     class="wallet-button"
     [class.connected]="account"
-    (click)="account ? disconnectWallet() : connectWallet()"
+    (click)="
+      !isMetaMaskInstalled
+        ? openMetaMaskDownload()
+        : account
+        ? disconnectWallet()
+        : connectWallet()
+    "
     [disabled]="isConnecting"
   >
-    @if (!account) {
+    @if (!isMetaMaskInstalled) {
+    <p>Install MetaMask</p>
+    } @else if (!account) {
     <p>Connect Wallet</p>
     } @else {
     <p>{{ account.slice(0, 6) }}...{{ account.slice(-4) }}</p>
@@ -17,6 +25,12 @@
 <main class="faucet-content">
   <h1 class="faucet-title">MSC Token Faucet</h1>
   <section>
+    @if (!isMetaMaskInstalled) {
+    <p class="faucet-message">Please install MetaMask to use the faucet</p>
+    <button (click)="openMetaMaskDownload()" class="request-button">
+      Install MetaMask
+    </button>
+    } @else {
     <p *ngIf="!account" class="faucet-message">
       Connect your wallet to use the faucet
     </p>
@@ -30,10 +44,11 @@
     />
     <button
       (click)="requestTokens()"
-      [disabled]="isConnecting"
+      [disabled]="isConnecting || !account"
       class="request-button"
     >
       Request Tokens
     </button>
+    }
   </section>
 </main>

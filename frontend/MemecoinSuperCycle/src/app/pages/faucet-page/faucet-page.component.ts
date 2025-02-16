@@ -15,21 +15,45 @@ export class FaucetPageComponent implements OnInit {
   public account: string = '';
   public isConnecting: boolean = false;
   public message: string = '';
+  public isMetaMaskInstalled: boolean = false;
+
   constructor(
     private web3Service: Web3Service,
     private contractService: ContractService
-  ) {}
+  ) {
+    this.isMetaMaskInstalled = typeof window.ethereum !== 'undefined';
+  }
 
   async ngOnInit() {
-    this.web3Service.account$.subscribe((account) => (this.account = account));
+    if (this.isMetaMaskInstalled) {
+      this.web3Service.account$.subscribe(
+        (account) => (this.account = account)
+      );
+    } else {
+      this.message = 'Please install MetaMask to use this feature';
+    }
+  }
+
+  openMetaMaskDownload() {
+    window.open(
+      'https://metamask.io/download/',
+      '_blank',
+      'noopener,noreferrer'
+    );
   }
 
   async connectWallet() {
     try {
       this.isConnecting = true;
+      if (!this.isMetaMaskInstalled) {
+        this.openMetaMaskDownload();
+        this.message = 'Please install MetaMask to continue';
+        return;
+      }
       await this.web3Service.connectWallet();
     } catch (error) {
       console.error('Connection failed:', error);
+      this.message = 'Failed to connect wallet';
     } finally {
       this.isConnecting = false;
     }
