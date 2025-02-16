@@ -64,33 +64,40 @@ interface MetaMaskError extends Error {
   providedIn: 'root',
 })
 export class Web3Service {
-  private provider: BrowserProvider;
+  private provider: BrowserProvider | null = null;
   private accountSubject = new BehaviorSubject<string>('');
   public account$ = this.accountSubject.asObservable();
   private networkSubject = new BehaviorSubject<string>('');
   public network$ = this.networkSubject.asObservable();
 
   constructor() {
-    this.provider = new ethers.BrowserProvider(window.ethereum);
-    this.checkWalletConnection();
-    this.listenToNetworkChanges();
+    if (typeof window.ethereum !== 'undefined') {
+      this.provider = new ethers.BrowserProvider(window.ethereum);
+      this.checkWalletConnection();
+      this.listenToNetworkChanges();
+    } else {
+      console.log('MetaMask not detected');
+    }
   }
 
   private listenToNetworkChanges() {
     if (typeof window.ethereum !== 'undefined') {
       window.ethereum.on('chainChanged', (chainId: string) => {
         this.networkSubject.next(chainId);
-        this.checkWalletConnection(); // Refresh connection state
+        this.checkWalletConnection();
       });
     }
   }
 
   async checkWalletConnection() {
-    if (typeof window.ethereum !== 'undefined') {
-      this.provider = new ethers.BrowserProvider(window.ethereum);
-      const accounts = await this.provider.listAccounts();
-      if (accounts.length > 0) {
-        this.accountSubject.next(accounts[0].address);
+    if (this.provider) {
+      try {
+        const accounts = await this.provider.listAccounts();
+        if (accounts.length > 0) {
+          this.accountSubject.next(accounts[0].address);
+        }
+      } catch (error) {
+        console.error('Error checking wallet connection:', error);
       }
     }
   }
